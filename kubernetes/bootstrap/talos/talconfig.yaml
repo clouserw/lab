@@ -1,0 +1,78 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
+---
+# renovate: datasource=docker depName=ghcr.io/siderolabs/installer
+talosVersion: v1.7.5
+# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+kubernetesVersion: v1.30.3
+
+clusterName: "home-kubernetes"
+endpoint: https://192.168.10.101:6443
+clusterPodNets:
+  - "10.69.0.0/16"
+clusterSvcNets:
+  - "10.96.0.0/16"
+additionalApiServerCertSans: &sans
+  - "192.168.10.101"
+  - 127.0.0.1 # KubePrism
+additionalMachineCertSans: *sans
+
+# Disable built-in Flannel to use Cilium
+cniConfig:
+  name: none
+
+nodes:
+  - hostname: "talos-6"
+    ipAddress: ""
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/903b2da78f99adef03cbbd4df6714563823f63218508800751560d3bc3557e40
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "08:00:27:fa:7b:be"
+        dhcp: true
+        mtu: 1500
+        vip:
+          ip: "192.168.10.101"
+  - hostname: "talos-7"
+    ipAddress: ""
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/903b2da78f99adef03cbbd4df6714563823f63218508800751560d3bc3557e40
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "08:00:27:de:ac:cd"
+        dhcp: true
+        mtu: 1500
+        vip:
+          ip: "192.168.10.101"
+  - hostname: "talos-8"
+    ipAddress: ""
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/903b2da78f99adef03cbbd4df6714563823f63218508800751560d3bc3557e40
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "08:00:27:27:3e:a9"
+        dhcp: true
+        mtu: 1500
+        vip:
+          ip: "192.168.10.101"
+
+# Global patches
+patches:
+  - "@./patches/global/cluster-discovery.yaml"
+  - "@./patches/global/containerd.yaml"
+  - "@./patches/global/disable-search-domain.yaml"
+  - "@./patches/global/hostdns.yaml"
+  - "@./patches/global/kubelet.yaml"
+  - "@./patches/global/openebs-local.yaml"
+  - "@./patches/global/sysctl.yaml"
+
+# Controller patches
+controlPlane:
+  patches:
+    - "@./patches/controller/api-access.yaml"
+    - "@./patches/controller/cluster.yaml"
+    - "@./patches/controller/disable-admission-controller.yaml"
+    - "@./patches/controller/etcd.yaml"
+
