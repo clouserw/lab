@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: grafana-pv
+  labels:
+    tier=gold
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  storageClassName: manual
+  nfs:
+    path: /mnt/tank/data/kubernetes/grafana-pv
+    server: 192.168.10.210
+    persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: grafana-pvc
+    namespace: observability
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: grafana-pvc
+  namespace: observability
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
