@@ -13,7 +13,7 @@ spec:
   nfs:
     path: ${SECRET_NFS_PATH}/prometheus-pv
     server: ${SECRET_NFS_SERVER}
-    persistentVolumeReclaimPolicy: Retain
+      #persistentVolumeReclaimPolicy: Retain
   claimRef:
     name: prometheus-pvc
     namespace: observability
@@ -44,7 +44,7 @@ spec:
   nfs:
     path: ${SECRET_NFS_PATH}/alertmanager-pv
     server: ${SECRET_NFS_SERVER}
-    persistentVolumeReclaimPolicy: Retain
+      #persistentVolumeReclaimPolicy: Retain
   claimRef:
     name: alertmanager-pvc
     namespace: observability

@@ -1,3 +1,3 @@
 ---
-providerRegex: ^(talos-6|talos-7|talos-8)$
+providerRegex: ^(talos-6)$
 bypassDnsResolution: true

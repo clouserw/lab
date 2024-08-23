@@ -4,7 +4,7 @@ kind: PersistentVolume
 metadata:
   name: grafana-pv
   labels:
-    tier=gold
+    tier: gold
 spec:
   capacity:
     storage: 1Gi
@@ -15,7 +15,7 @@ spec:
   nfs:
     path: /mnt/tank/data/kubernetes/grafana-pv
     server: 192.168.10.210
-    persistentVolumeReclaimPolicy: Retain
+      #persistentVolumeReclaimPolicy: Retain
   claimRef:
     name: grafana-pvc
     namespace: observability
