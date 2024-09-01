@@ -24,7 +24,7 @@ nodes:
   - hostname: "talos-6"
     ipAddress: "192.168.10.94"
     installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/903b2da78f99adef03cbbd4df6714563823f63218508800751560d3bc3557e40
+    talosImageURL: factory.talos.dev/installer/35b1edd437437bf2d8728fc5101d91ede351eba706d2ac9df13640981a62e838
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
